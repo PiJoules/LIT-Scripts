@@ -1,29 +1,46 @@
 #include <Servo.h>
+#include <NewPing.h>
 Servo myservo;
 int pos;
-int servopin = 6; // Whatever the PWN pin is off the servo
-int digread = 8; //Whatever pin is digital read
+int servopin = 5; // Whatever the PWN pin is off the servo
+int AnRead = A0; //Whatever pin is digital read
 int UP = 90; // Degree to move the servo up
 int DOWN = 180; //Degree to move the servo down
 int Count = 0; //Makes sure it doesn't keep spinning
+int NOTHING = 0; //Degree to move the servo to do nothing
+double val;
+ 
+#define TRIGGER_PIN  12
+#define ECHO_PIN     11
+#define MAX_DISTANCE 300
+ 
+NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
 
 void setup() {
   myservo.attach(servopin);
-  pinMode(digread,INPUT);  
+  pinMode(AnRead,INPUT);  
 }
 
 void loop() {
   
-  val = digitalRead(digread);
+//  val = analogRead(AnRead);
+//  Serial.println(val);
+  delay(50);
+  int uS = sonar.ping();
+  Serial.print("Ping: ");
+  Serial.print(uS / US_ROUNDTRIP_CM);
+  Serial.println("cm");
   
-  if(val == HIGH){ // if it detects go up
+  if(uS < 15){ // if it detects go up
     myservo.write(UP);
     Count++;
-  }else if(val == LOW && Count > 0){ //if it detects go down 
+  }else if(uS > 15 && Count > 0){ //if it detects go down 
     myservo.write(DOWN); 
     Count--;
+  }else{
+    myservo.write(NOTHING);
   }
-   
-  delay(10);
+  
+//  delay(10);
 
 }

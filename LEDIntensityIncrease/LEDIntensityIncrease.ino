@@ -1,7 +1,7 @@
-
-//int pin = 13;
+// 9 Combinations of Numbers want to make a program to hit all of them
 int pin1 = 0;
 int randy = 0;
+int pinstates[] = {50,50,50};
 
 
 void setup() {
@@ -10,6 +10,7 @@ void setup() {
   analogWrite(13,50);
   analogWrite(11,50);
   analogWrite(10,50);
+ 
 }
 
 void loop() {
@@ -18,7 +19,7 @@ void loop() {
   Serial.print(randy + "\n");
   
   if (randy == 0){
-    pin1 = 13; 
+    pin1 = 13;
   }
   else if(randy == 1){
     pin1 = 11;
@@ -27,17 +28,19 @@ void loop() {
     pin1 = 10;
   }
   
+  if (pinstates[randy] < 200 ){
+      for(int i = 50; i < 256; i+=5){
+        analogWrite(pin1,i);
+        delay(10);
+        pinstates[randy]=i;
+      }
+  }else if( pinstates[randy] > 250){
+      for(int i = 256; i > 50; i-=5){
+        analogWrite(pin1,i);
+        delay(10);
+        pinstates[randy]=i;
+    } 
+  } 
+//  pinstates[randy] = i;
   
-  for(int i = 50; i < 256; i+=5){
-    analogWrite(pin1,i);
-    delay(100);
-  }
-  
-  for(int j = 256; j > 50; j-=5){
-    analogWrite(pin1,j);
-    delay(100);
-  }
-  
-  
-
 }
