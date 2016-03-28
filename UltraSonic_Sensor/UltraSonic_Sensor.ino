@@ -8,6 +8,7 @@ int DOWN = 180; //Degree to move the servo down
 int Count = 0; //Makes sure it doesn't keep spinning
 int NOTHING = 90; //Degree to move the servo to do nothing
 double val;
+int distance;
  
 #define TRIGGER_PIN  12
 #define ECHO_PIN     11
@@ -29,12 +30,13 @@ void loop() {
   Serial.print("Ping: ");
   Serial.print(uS / US_ROUNDTRIP_CM);
   Serial.println("cm");
+  distance = uS / US_ROUNDTRIP_CM;
   
-  if(uS < 15){ // if it detects go up
+  if(distance < 15){ // if it detects go up
     myservo.write(UP);
     Serial.println("Servo is going up");
     Count++;
-  }else if(uS > 15 && Count > 0){ //if it detects go down 
+  }else if(distance > 15 && Count > 0){ //if it detects go down 
     myservo.write(DOWN); 
     Serial.println("Servo is going down");
     Count--;
