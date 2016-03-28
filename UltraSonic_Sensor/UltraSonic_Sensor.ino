@@ -3,11 +3,10 @@
 Servo myservo;
 int pos;
 int servopin = 5; // Whatever the PWN pin is off the servo
-int AnRead = A0; //Whatever pin is digital read
-int UP = 90; // Degree to move the servo up
+int UP = 0; // Degree to move the servo up
 int DOWN = 180; //Degree to move the servo down
 int Count = 0; //Makes sure it doesn't keep spinning
-int NOTHING = 0; //Degree to move the servo to do nothing
+int NOTHING = 90; //Degree to move the servo to do nothing
 double val;
  
 #define TRIGGER_PIN  12
@@ -18,7 +17,6 @@ NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
 
 void setup() {
   myservo.attach(servopin);
-  pinMode(AnRead,INPUT);  
 }
 
 void loop() {
