@@ -11,12 +11,13 @@ double val;
  
 #define TRIGGER_PIN  12
 #define ECHO_PIN     11
-#define MAX_DISTANCE 300
+#define MAX_DISTANCE 200
  
 NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
 
 void setup() {
   myservo.attach(servopin);
+  Serial.begin(115200);
 }
 
 void loop() {
@@ -31,14 +32,18 @@ void loop() {
   
   if(uS < 15){ // if it detects go up
     myservo.write(UP);
+    Serial.println("Servo is going up");
     Count++;
   }else if(uS > 15 && Count > 0){ //if it detects go down 
     myservo.write(DOWN); 
+    Serial.println("Servo is going down");
     Count--;
   }else{
     myservo.write(NOTHING);
+    Serial.println("Servo is doing nothing");
   }
   
 //  delay(10);
-
-}
+  Serial.print("Count is " );
+  Serial.print(Count);
+  Serial.println("\n");
